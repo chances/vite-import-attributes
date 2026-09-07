@@ -17,7 +17,7 @@ export default function vitePluginImportAttributes(pluginOptions?: {
       // like "design/broadsheet.css") before @deno/vite-plugin's resolveId
       // does: its resolution path round-trips through `fileURLToPath`, which
       // reads only the URL's pathname and silently drops our `?raw` /
-      // `?__attributes=` query, so the raw-text marker never survives.
+      // `?inline` / `?__attributes=` query, so the marker never survives.
       enforce: "pre",
       async config() {
         await esModuleLexer.init;
@@ -27,7 +27,10 @@ export default function vitePluginImportAttributes(pluginOptions?: {
         if (queryIndex === -1) return;
         const base = id.slice(0, queryIndex);
         const query = id.slice(queryIndex);
-        if (query !== "?raw" && !query.startsWith(`?${KEY}=`)) return;
+        if (
+          query !== "?raw" && query !== "?inline" &&
+          !query.startsWith(`?${KEY}=`)
+        ) return;
         if (
           base.startsWith(".") || base.startsWith("/") || base.startsWith("\0")
         ) return;
@@ -80,9 +83,18 @@ export function transformImportAttributes(
       }
       output ??= new MagicString(code);
 
-      // Handle type: "text" specially — convert to ?raw
+      // `type: "text"` -> `?raw` (verbatim file contents, matching Vite's
+      // built-in raw text handling).
+      //
+      // `type: "css"` -> `?inline`, so Vite runs the CSS pipeline
+      // (preprocessors, PostCSS) and returns the processed stylesheet as a
+      // string default export without injecting a `<style>` tag. This is far
+      // closer to the runtime shape of a native `with { type: "css" }` import
+      // than `?raw` would be.
       if (attributes.type === "text") {
         output.appendLeft(moduleEnd, "?raw");
+      } else if (attributes.type === "css") {
+        output.appendLeft(moduleEnd, "?inline");
       } else {
         output.appendLeft(
           moduleEnd,
