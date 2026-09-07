@@ -1,0 +1,12 @@
+[
+  {
+    "label": "deno test",
+    "command": "deno task test",
+    "tags": ["js-test"]
+  },
+  {
+    "label": "deno check",
+    "command": "deno check .",
+    "tags": ["lint"]
+  }
+]
