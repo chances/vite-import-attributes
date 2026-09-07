@@ -24,6 +24,14 @@ describe("transformImportAttributes", () => {
     );
   });
 
+  it("type css", () => {
+    const input = `import css from "./style.scss" with { type: "css" };`;
+    assertEquals(
+      transformImportAttributes(input)?.toString(),
+      `import css from "./style.scss?inline";`,
+    );
+  });
+
   it("other attributes", () => {
     const input =
       `import { Counter } from "./counter" with { island: "client-only" };`;

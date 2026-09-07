@@ -11,7 +11,8 @@ Import attributes (formerly "import assertions") let you attach metadata to
 module imports:
 
 ```ts
-import css from "./style.css" with { type: "text" };
+import text from "./notes.txt" with { type: "text" };
+import styles from "./theme.scss" with { type: "css" };
 import data from "./schema.json" with { type: "json" };
 import { Counter } from "./counter" with { island: "client-only" };
 const mod = await import("./lazy", { with: { island: "client-only" } });
@@ -22,6 +23,9 @@ Vite's existing query-string mechanism so they "just work":
 
 - `{ type: "text" }` becomes `?raw`, matching Vite's built-in handling for raw
   text imports.
+- `{ type: "css" }` becomes `?inline`, so Vite runs the CSS pipeline
+  (preprocessors, PostCSS) and hands back the processed stylesheet as a string
+  default export — closer to a native `with { type: "css" }` import than `?raw`.
 - Other attributes are serialized into a `?__attributes=<json>` query string
   that other plugins can read via `parseImportAttributes(id)`.
 - Dynamic `import(..., { with: { ... } })` calls are rewritten the same way.
@@ -82,10 +86,10 @@ transform(_code, id) {
 
 If you use Vite with a custom resolver (e.g.
 [@deno/vite-plugin](https://github.com/denoland/vite-plugin-deno)) that resolves
-bare or aliased specifiers, the resolver may drop the `?raw` / `?__attributes=`
-query that this plugin appends. To prevent that, this plugin runs in
-`enforce: "pre"` and resolves the base specifier itself first, then re-appends
-the query. The bundled tests cover this case.
+bare or aliased specifiers, the resolver may drop the `?raw` / `?inline` /
+`?__attributes=` query that this plugin appends. To prevent that, this plugin
+runs in `enforce: "pre"` and resolves the base specifier itself first, then
+re-appends the query. The bundled tests cover this case.
 
 ## Development
 
