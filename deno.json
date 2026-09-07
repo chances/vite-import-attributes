@@ -1,6 +1,7 @@
 {
-  "name": "vite-import-attributes",
+  "name": "@chances/vite-import-attributes",
   "version": "0.1.0",
+  "license": "MIT",
   "nodeModulesDir": "auto",
   "tasks": {
     "test": "deno test --allow-env --allow-ffi --allow-read --allow-net --allow-sys ./**/*.test.ts"
