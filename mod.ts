@@ -1,7 +1,6 @@
 import * as esModuleLexer from "es-module-lexer";
 import MagicString from "magic-string";
-// deno-lint-ignore no-import-prefix no-unversioned-import
-import { createFilter, type Plugin } from "npm:vite";
+import { createFilter, type Plugin } from "vite";
 
 export default function vitePluginImportAttributes(pluginOptions?: {
   include: string | RegExp | (string | RegExp)[];

@@ -1,0 +1,12 @@
+{
+  "name": "@chances/vite-import-attributes",
+  "description": "Rewrites TC39 import attributes into Vite's native query-string syntax",
+  "author": "Chance Snow <git@chancesnow.me>",
+  "repository": "https://github.com/chances/vite-import-attributes",
+  "peerDependencies": {
+    "vite": "^7 || ^8"
+  },
+  "peerDependenciesMeta": {
+    "vite": { "optional": false }
+  }
+}

@@ -12,7 +12,8 @@
     "jsr:@std/testing@^1.0.20": "1.0.20",
     "npm:es-module-lexer@^2.3.2": "2.3.2",
     "npm:magic-string@^1.2.3": "1.2.3",
-    "npm:vite@*": "8.2.2"
+    "npm:vite@*": "8.2.2",
+    "npm:vite@^8.2.2": "8.2.2"
   },
   "jsr": {
     "@std/assert@1.0.19": {
@@ -314,6 +315,11 @@
       "jsr:@std/testing@^1.0.20",
       "npm:es-module-lexer@^2.3.2",
       "npm:magic-string@^1.2.3"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:vite@^8.2.2"
+      ]
+    }
   }
 }

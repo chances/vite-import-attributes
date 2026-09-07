@@ -18,7 +18,8 @@
     "@std/path": "jsr:@std/path@^1.1.6",
     "@std/testing": "jsr:@std/testing@^1.0.20",
     "es-module-lexer": "npm:es-module-lexer@^2.3.2",
-    "magic-string": "npm:magic-string@^1.2.3"
+    "magic-string": "npm:magic-string@^1.2.3",
+    "vite": "npm:vite@^8.2.2"
   },
   "exports": {
     ".": "./mod.ts"
